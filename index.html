@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>İyi ki Doğdun Nisa 🎉</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;500;600;800&display=swap&subset=latin-ext" rel="stylesheet">
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.3.1",
+    "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+    "react-dom": "https://esm.sh/react-dom@18.3.1",
+    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+    "framer-motion": "https://esm.sh/framer-motion@11.11.17?external=react,react-dom",
+    "htm": "https://esm.sh/htm@3.1.1"
+  }
+}
+</script>
+<style>
+  :root {
+    --bg1: #1a0633;
+    --bg2: #3b0a57;
+    --bg3: #0b0420;
+    --pink: #ff4fa3;
+    --gold: #ffd166;
+    --violet: #a56bff;
+    --cyan: #5ee7ff;
+    --text: #fff6fb;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Poppins', system-ui, sans-serif;
+    color: var(--text);
+    background: radial-gradient(ellipse at 20% 0%, var(--bg2), transparent 60%),
+                radial-gradient(ellipse at 90% 30%, #5a0f4a, transparent 55%),
+                linear-gradient(160deg, var(--bg1), var(--bg3));
+    background-attachment: fixed;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  #fx { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 60; }
+  .loading { position: fixed; inset: 0; display: grid; place-items: center; opacity: .7; }
+
+  /* yıldızlar */
+  .stars { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+  .star { position: absolute; border-radius: 50%; background: #fff; box-shadow: 0 0 8px #fff; }
+
+  /* giriş */
+  .intro {
+    position: fixed; inset: 0; z-index: 40;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 28px; padding: 24px; text-align: center;
+  }
+  .intro h1 { font-family: 'Pacifico', cursive; font-weight: 400; font-size: clamp(2rem, 7vw, 4.2rem); line-height: 1.25;
+    text-shadow: 0 0 30px rgba(255, 79, 163, .7); }
+  .intro p { font-size: clamp(1rem, 2.6vw, 1.25rem); opacity: .85; max-width: 520px; }
+  .gift-btn {
+    position: relative; border: 0; cursor: pointer; color: #3b0a2a;
+    font: 800 clamp(1.05rem, 3vw, 1.4rem) 'Poppins', sans-serif;
+    padding: 22px 44px; border-radius: 999px;
+    background: linear-gradient(120deg, var(--gold), #ff9ecb, var(--gold));
+    background-size: 200% 100%; animation: shine 3s linear infinite;
+    box-shadow: 0 12px 50px rgba(255, 79, 163, .6), inset 0 -4px 0 rgba(0,0,0,.15);
+  }
+  .ring { position: absolute; inset: 0; border-radius: 999px; border: 2px solid var(--gold); pointer-events: none; }
+  .gift-emoji { font-size: clamp(4rem, 14vw, 7rem); filter: drop-shadow(0 10px 30px rgba(255, 209, 102, .6)); }
+  @keyframes shine { to { background-position: -200% 0; } }
+
+  /* ana sayfa */
+  .main { position: relative; z-index: 2; }
+  .progress { position: fixed; top: 0; left: 0; right: 0; height: 5px; z-index: 70; transform-origin: 0 50%;
+    background: linear-gradient(90deg, var(--pink), var(--gold), var(--cyan)); }
+  section { position: relative; padding: 90px 20px; max-width: 1120px; margin: 0 auto; }
+  .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 14px; }
+  .hero-line { font-family: 'Pacifico', cursive; font-size: clamp(2.2rem, 8vw, 5rem); line-height: 1.2;
+    text-shadow: 0 4px 30px rgba(255, 79, 163, .8); }
+  .hero-line span { display: inline-block; }
+  .name {
+    font-weight: 800; font-size: clamp(4.5rem, 22vw, 13rem); line-height: 1; letter-spacing: .02em;
+    background: linear-gradient(100deg, var(--gold), var(--pink), var(--violet), var(--cyan), var(--gold));
+    background-size: 300% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: shine 6s linear infinite; filter: drop-shadow(0 8px 40px rgba(255, 79, 163, .55));
+  }
+  .hero-sub { font-size: clamp(1rem, 2.8vw, 1.35rem); opacity: .9; max-width: 620px; }
+  .emoji-row { display: flex; gap: 18px; font-size: clamp(2rem, 6vw, 3.2rem); margin-top: 10px; }
+  .scroll-hint { margin-top: 36px; font-size: .95rem; opacity: .7; }
+
+  .balloons { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+  .balloon { position: absolute; bottom: 0; border-radius: 50% 50% 50% 50% / 45% 45% 55% 55%; }
+  .balloon::before { content: ''; position: absolute; left: 22%; top: 16%; width: 22%; height: 26%; border-radius: 50%; background: rgba(255,255,255,.45); filter: blur(2px); }
+  .balloon::after { content: ''; position: absolute; left: 50%; top: 100%; width: 1.5px; height: 90px; background: rgba(255,255,255,.4); }
+
+  .confetti { position: fixed; inset: 0; pointer-events: none; z-index: 55; overflow: hidden; }
+  .confetti div { position: absolute; top: 0; }
+
+  h2 { font-family: 'Pacifico', cursive; font-weight: 400; font-size: clamp(1.9rem, 6vw, 3.2rem); text-align: center; margin-bottom: 46px;
+    text-shadow: 0 0 26px rgba(165, 107, 255, .8); }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 24px; }
+  .card {
+    position: relative; padding: 30px 26px; border-radius: 26px; cursor: default;
+    background: linear-gradient(150deg, rgba(255,255,255,.16), rgba(255,255,255,.05));
+    border: 1px solid rgba(255,255,255,.22); backdrop-filter: blur(10px);
+    box-shadow: 0 18px 50px rgba(0,0,0,.35);
+  }
+  .card .ico { font-size: 2.6rem; display: inline-block; margin-bottom: 12px; }
+  .card h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; color: var(--gold); }
+  .card p { line-height: 1.65; opacity: .93; }
+
+  .marquee { overflow: hidden; padding: 26px 0; border-block: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.05); }
+  .marquee-track { display: flex; width: max-content; gap: 44px; font-weight: 800; font-size: clamp(1.3rem, 4vw, 2.2rem); white-space: nowrap; }
+  .marquee-track span:nth-child(3n+1) { color: var(--gold); }
+  .marquee-track span:nth-child(3n+2) { color: var(--pink); }
+  .marquee-track span:nth-child(3n) { color: var(--cyan); }
+
+  /* pasta */
+  .cake-wrap { display: flex; flex-direction: column; align-items: center; gap: 30px; text-align: center; }
+  .cake { display: flex; flex-direction: column; align-items: center; filter: drop-shadow(0 24px 40px rgba(0,0,0,.45)); }
+  .candles { display: flex; gap: 20px; align-items: flex-end; height: 86px; }
+  .candle { position: relative; width: 12px; height: 46px; border-radius: 4px;
+    background: repeating-linear-gradient(45deg, #fff 0 6px, var(--pink) 6px 12px); }
+  .flame { position: absolute; left: 50%; bottom: 100%; width: 16px; height: 26px; margin-left: -8px;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; transform-origin: 50% 100%;
+    background: radial-gradient(circle at 50% 75%, #fff 0 18%, #ffd166 40%, #ff7a18 80%);
+    box-shadow: 0 0 22px 8px rgba(255, 170, 60, .7); }
+  .smoke { position: absolute; left: 50%; bottom: 100%; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; background: rgba(255,255,255,.5); filter: blur(3px); }
+  .layer { position: relative; border-radius: 16px 16px 6px 6px; }
+  .layer::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 22px; border-radius: 16px 16px 0 0;
+    background: radial-gradient(circle at 12px 22px, transparent 11px, #fff 12px) 0 0 / 24px 34px repeat-x, #fff; -webkit-mask: linear-gradient(#000, #000); }
+  .l1 { width: 150px; height: 62px; background: linear-gradient(#ff8fc4, #ff4fa3); }
+  .l2 { width: 215px; height: 70px; background: linear-gradient(#c79bff, #8b4dff); }
+  .l3 { width: 285px; height: 82px; background: linear-gradient(#ffe08a, #ffb347); }
+  .plate { width: 340px; max-width: 92vw; height: 14px; border-radius: 999px; background: linear-gradient(#fff, #cfc3e6); }
+  .btn {
+    border: 0; cursor: pointer; padding: 16px 34px; border-radius: 999px; color: #fff;
+    font: 800 1.05rem 'Poppins', sans-serif;
+    background: linear-gradient(120deg, var(--pink), var(--violet));
+    box-shadow: 0 10px 34px rgba(255, 79, 163, .55);
+  }
+  .wish { font-size: clamp(1.1rem, 3vw, 1.5rem); font-weight: 600; color: var(--gold); min-height: 2em; }
+
+  .finale { text-align: center; padding-bottom: 140px; }
+  .heart { font-size: clamp(5rem, 18vw, 9rem); display: inline-block; filter: drop-shadow(0 0 40px rgba(255, 79, 163, .8)); }
+  .finale p { font-size: clamp(1.05rem, 2.8vw, 1.35rem); max-width: 640px; margin: 18px auto 34px; line-height: 1.7; opacity: .95; }
+  .sign { font-family: 'Pacifico', cursive; font-size: 1.6rem; color: var(--gold); margin-top: 34px; }
+</style>
+</head>
+<body>
+<canvas id="fx"></canvas>
+<div id="root"><div class="loading">Sürpriz hazırlanıyor… 🎁</div></div>
+
+<script>
+/* ---------- Havai fişek motoru (canvas) ---------- */
+(() => {
+  const cvs = document.getElementById('fx');
+  const ctx = cvs.getContext('2d');
+  let W = 0, H = 0;
+  const rockets = [], sparks = [];
+  const G = 0.13;
+  const rand = (a, b) => a + Math.random() * (b - a);
+
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    cvs.width = W * dpr; cvs.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function launch(x = rand(W * .12, W * .88), y = rand(H * .12, H * .5)) {
+    rockets.push({ x, y: H, tx: x, vy: -Math.sqrt(2 * G * Math.max(60, H - y)), hue: rand(0, 360) });
+  }
+
+  function explode(x, y, hue) {
+    const n = Math.round(rand(70, 120));
+    const ringOnly = Math.random() < .3;
+    const two = Math.random() < .4 ? (hue + rand(40, 180)) % 360 : hue;
+    for (let i = 0; i < n; i++) {
+      const a = (Math.PI * 2 * i) / n + rand(-.05, .05);
+      const sp = ringOnly ? rand(4.6, 5.2) : rand(1, 6.2);
+      sparks.push({
+        x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
+        life: 1, decay: rand(.009, .02), hue: i % 2 ? hue : two, size: rand(1.4, 2.8)
+      });
+    }
+  }
+
+  function frame() {
+    // her karede temizle, izleri çizgi olarak çiz (kalıntı bırakmaz)
+    ctx.clearRect(0, 0, W, H);
+    if (rockets.length || sparks.length) {
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.lineCap = 'round';
+
+      for (let i = rockets.length - 1; i >= 0; i--) {
+        const r = rockets[i];
+        r.y += r.vy; r.vy += G;
+        const grad = ctx.createLinearGradient(r.x, r.y, r.x, r.y - r.vy * 5);
+        grad.addColorStop(0, `hsla(${r.hue},100%,80%,1)`);
+        grad.addColorStop(1, `hsla(${r.hue},100%,60%,0)`);
+        ctx.strokeStyle = grad; ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.moveTo(r.x, r.y); ctx.lineTo(r.x, r.y - r.vy * 5); ctx.stroke();
+        if (r.vy >= -0.6) { explode(r.x, r.y, r.hue); rockets.splice(i, 1); }
+      }
+      for (let i = sparks.length - 1; i >= 0; i--) {
+        const s = sparks[i];
+        s.vx *= .975; s.vy = s.vy * .975 + .045;
+        s.x += s.vx; s.y += s.vy; s.life -= s.decay;
+        if (s.life <= 0) { sparks.splice(i, 1); continue; }
+        ctx.strokeStyle = `hsla(${s.hue},100%,${55 + s.life * 25}%,${s.life})`;
+        ctx.lineWidth = s.size * (0.5 + s.life * .7);
+        ctx.beginPath(); ctx.moveTo(s.x - s.vx * 4, s.y - s.vy * 4); ctx.lineTo(s.x, s.y); ctx.stroke();
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+  frame();
+
+  window.FX = {
+    launch,
+    show(count = 12, gap = 220) {
+      for (let i = 0; i < count; i++) setTimeout(() => launch(), i * gap + rand(0, 120));
+    }
+  };
+})();
+</script>
+
+<script type="module">
+import React, { useState, useEffect, useMemo } from 'react';
+import { createRoot } from 'react-dom/client';
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
+import htm from 'htm';
+
+const html = htm.bind(React.createElement);
+const rand = (a, b) => a + Math.random() * (b - a);
+const COLORS = ['#ff4fa3', '#ffd166', '#a56bff', '#5ee7ff', '#7dffb0', '#ff8a5c'];
+
+/* ---------- Nisa'ya mesajlar (istediğin gibi düzenle) ---------- */
+const MESSAGES = [
+  { ico: '🌟', title: 'İyi ki doğdun!', text: 'Bugün dünyanın en güzel günlerinden biri, çünkü sen doğdun Nisa. Varlığınla girdiğin her ortamı aydınlatıyorsun.' },
+  { ico: '💖', title: 'İyi ki varsın', text: 'Gülüşün bulaşıcı, kalbin kocaman. Seni tanıyan herkes ne kadar şanslı olduğunu çok iyi biliyor.' },
+  { ico: '🦋', title: 'Yeni yaşın', text: 'Yeni yaşın sana sağlık, huzur, bolca kahkaha ve hayal ettiğin her şeyi getirsin. En güzel yılların daha önünde!' },
+  { ico: '🎂', title: 'Dilek zamanı', text: 'Mumları üflerken tuttuğun bütün dilekler tek tek gerçek olsun. Sen her birini fazlasıyla hak ediyorsun.' },
+  { ico: '🌈', title: 'Hep gül', text: 'Yüzünden gülümseme, hayatından renkler hiç eksik olmasın. Üzüntüler sana uğramadan geçip gitsin.' },
+  { ico: '🥂', title: 'Nice yıllara', text: 'Birlikte kutlayacağımız daha nice doğum günlerine! Bugün senin günün Nisa, tadını doya doya çıkar.' },
+];
+const WORDS = ['güzel kalpli', 'neşeli', 'ışıl ışıl', 'eşsiz', 'sevgi dolu', 'zeki', 'tatlı', 'ilham veren', 'cesur', 'biricik'];
+
+function Stars() {
+  const stars = useMemo(() => Array.from({ length: 70 }, () => ({
+    left: rand(0, 100), top: rand(0, 100), size: rand(1, 3.2), dur: rand(1.5, 4.5), delay: rand(0, 4)
+  })), []);
+  return html`<div className="stars">
+    ${stars.map((s, i) => html`<${motion.div} key=${i} className="star"
+      style=${{ left: s.left + '%', top: s.top + '%', width: s.size, height: s.size }}
+      animate=${{ opacity: [0.15, 1, 0.15], scale: [0.6, 1.4, 0.6] }}
+      transition=${{ duration: s.dur, delay: s.delay, repeat: Infinity, ease: 'easeInOut' }} />`)}
+  </div>`;
+}
+
+function Balloons() {
+  const items = useMemo(() => Array.from({ length: 14 }, (_, i) => {
+    const size = rand(46, 92);
+    return { left: rand(2, 94), size, color: COLORS[i % COLORS.length], dur: rand(11, 20), delay: rand(0, 12), sway: rand(20, 60) };
+  }), []);
+  return html`<div className="balloons">
+    ${items.map((b, i) => html`<${motion.div} key=${i} className="balloon"
+      style=${{ left: b.left + '%', width: b.size, height: b.size * 1.22,
+        background: `radial-gradient(circle at 30% 25%, #ffffffaa, ${b.color} 45%, ${b.color})`, opacity: .85 }}
+      initial=${{ y: '30vh' }}
+      animate=${{ y: '-135vh', x: [0, b.sway, -b.sway, 0], rotate: [-6, 6, -6] }}
+      transition=${{
+        y: { duration: b.dur, delay: b.delay, repeat: Infinity, ease: 'linear' },
+        x: { duration: b.dur / 2, delay: b.delay, repeat: Infinity, ease: 'easeInOut' },
+        rotate: { duration: 4, repeat: Infinity, ease: 'easeInOut' }
+      }} />`)}
+  </div>`;
+}
+
+function Confetti({ burst }) {
+  const pieces = useMemo(() => Array.from({ length: 90 }, (_, i) => ({
+    left: rand(0, 100), w: rand(7, 14), h: rand(10, 22), color: COLORS[i % COLORS.length],
+    dur: rand(2.6, 5.2), delay: rand(0, 1.2), drift: rand(-160, 160), spin: rand(360, 1080) * (Math.random() < .5 ? -1 : 1),
+    round: Math.random() < .25
+  })), [burst]);
+  return html`<div className="confetti" key=${burst}>
+    ${pieces.map((p, i) => html`<${motion.div} key=${i}
+      style=${{ left: p.left + '%', width: p.w, height: p.round ? p.w : p.h, background: p.color, borderRadius: p.round ? '50%' : 2 }}
+      initial=${{ y: '-10vh', x: 0, rotate: 0, opacity: 1 }}
+      animate=${{ y: '112vh', x: p.drift, rotate: p.spin, rotateX: p.spin, opacity: [1, 1, 0.9, 0] }}
+      transition=${{ duration: p.dur, delay: p.delay, ease: [0.2, 0.6, 0.6, 1] }} />`)}
+  </div>`;
+}
+
+function Intro({ onOpen }) {
+  return html`<${motion.div} className="intro"
+    initial=${{ opacity: 0 }} animate=${{ opacity: 1 }}
+    exit=${{ opacity: 0, scale: 1.6, filter: 'blur(14px)' }} transition=${{ duration: 0.7 }}>
+    <${motion.div} className="gift-emoji"
+      animate=${{ y: [0, -18, 0], rotate: [-6, 6, -6] }}
+      transition=${{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}>🎁<//>
+    <${motion.h1} initial=${{ y: 40, opacity: 0 }} animate=${{ y: 0, opacity: 1 }}
+      transition=${{ delay: 0.2, type: 'spring', stiffness: 120 }}>Nisa, sana bir sürprizimiz var!<//>
+    <${motion.p} initial=${{ opacity: 0 }} animate=${{ opacity: 0.85 }} transition=${{ delay: 0.6 }}>
+      Hazırsan butona bas ve kutlamayı başlat ✨<//>
+    <${motion.button} className="gift-btn" onClick=${onOpen}
+      initial=${{ scale: 0 }} animate=${{ scale: [1, 1.07, 1] }}
+      transition=${{ scale: { duration: 1.4, repeat: Infinity, ease: 'easeInOut', delay: 0.8 } }}
+      whileHover=${{ scale: 1.14, rotate: -2 }} whileTap=${{ scale: 0.9 }}>
+      ${[0, 1].map(i => html`<${motion.span} key=${i} className="ring"
+        animate=${{ scale: [1, 1.7], opacity: [0.8, 0] }}
+        transition=${{ duration: 1.8, repeat: Infinity, delay: i * 0.9, ease: 'easeOut' }} />`)}
+      🎉 Sürprizi Aç
+    <//>
+  <//>`;
+}
+
+function Hero() {
+  const line = 'İyi ki Doğdun'.split('');
+  return html`<section className="hero">
+    <div className="hero-line">
+      ${line.map((ch, i) => html`<${motion.span} key=${i}
+        initial=${{ y: 90, opacity: 0, rotate: -25, scale: 0.4 }}
+        animate=${{ y: 0, opacity: 1, rotate: 0, scale: 1 }}
+        transition=${{ delay: 0.3 + i * 0.07, type: 'spring', stiffness: 260, damping: 12 }}>
+        ${ch === ' ' ? ' ' : ch}<//>`)}
+    </div>
+    <${motion.div} className="name"
+      initial=${{ scale: 0, rotate: -12, opacity: 0 }}
+      animate=${{ scale: 1, rotate: 0, opacity: 1, y: [0, -12, 0] }}
+      transition=${{
+        scale: { delay: 1.3, type: 'spring', stiffness: 140, damping: 9 },
+        rotate: { delay: 1.3, type: 'spring', stiffness: 140, damping: 9 },
+        opacity: { delay: 1.3, duration: 0.3 },
+        y: { delay: 2.4, duration: 3.5, repeat: Infinity, ease: 'easeInOut' }
+      }}>NİSA<//>
+    <${motion.p} className="hero-sub" initial=${{ opacity: 0, y: 20 }} animate=${{ opacity: 0.9, y: 0 }} transition=${{ delay: 2 }}>
+      Bugün senin günün! Bu sayfa, seni ne kadar çok sevdiğimizi söylemek için hazırlandı. 💫<//>
+    <div className="emoji-row">
+      ${['🎈', '🎂', '🎉', '🥳', '🎁'].map((e, i) => html`<${motion.span} key=${i}
+        initial=${{ scale: 0 }} animate=${{ scale: 1, y: [0, -16, 0] }}
+        transition=${{ scale: { delay: 2.2 + i * 0.12, type: 'spring' }, y: { delay: 2.6 + i * 0.15, duration: 1.4, repeat: Infinity, ease: 'easeInOut' } }}
+        whileHover=${{ scale: 1.5, rotate: 20 }}>${e}<//>`)}
+    </div>
+    <${motion.div} className="scroll-hint" initial=${{ opacity: 0 }}
+      animate=${{ opacity: [0.3, 0.9, 0.3], y: [0, 10, 0] }} transition=${{ delay: 3, duration: 2, repeat: Infinity }}>
+      Aşağı kaydır · ekrana dokun, fişek patlasın 🎆 ↓<//>
+  </section>`;
+}
+
+function Messages() {
+  return html`<section>
+    <${motion.h2} initial=${{ opacity: 0, y: 40 }} whileInView=${{ opacity: 1, y: 0 }} viewport=${{ once: true, amount: 0.6 }}
+      transition=${{ type: 'spring', stiffness: 90 }}>Nisa'ya Mesajlarımız 💌<//>
+    <div className="cards">
+      ${MESSAGES.map((m, i) => html`<${motion.div} key=${i} className="card"
+        initial=${{ opacity: 0, y: 70, rotate: i % 2 ? 5 : -5, scale: 0.85 }}
+        whileInView=${{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
+        viewport=${{ once: true, amount: 0.3 }}
+        transition=${{ delay: (i % 3) * 0.12, type: 'spring', stiffness: 110, damping: 13 }}
+        whileHover=${{ y: -12, scale: 1.04, rotate: i % 2 ? 1.5 : -1.5, boxShadow: '0 26px 70px rgba(255,79,163,.45)' }}>
+        <${motion.span} className="ico" animate=${{ rotate: [-10, 10, -10], scale: [1, 1.15, 1] }}
+          transition=${{ duration: 2.4, repeat: Infinity, delay: i * 0.2, ease: 'easeInOut' }}>${m.ico}<//>
+        <h3>${m.title}</h3>
+        <p>${m.text}</p>
+      <//>`)}
+    </div>
+  </section>`;
+}
+
+function Marquee() {
+  const words = [...WORDS, ...WORDS];
+  return html`<div className="marquee">
+    <${motion.div} className="marquee-track" animate=${{ x: ['0%', '-50%'] }}
+      transition=${{ duration: 22, repeat: Infinity, ease: 'linear' }}>
+      ${words.map((w, i) => html`<span key=${i}>✦ ${w}</span>`)}
+    <//>
+  </div>`;
+}
+
+function Cake({ onBlow }) {
+  const [lit, setLit] = useState(true);
+  const blow = e => {
+    e.stopPropagation();
+    if (lit) { setLit(false); onBlow(); } else setLit(true);
+  };
+  return html`<section className="cake-wrap">
+    <${motion.h2} style=${{ marginBottom: 0 }} initial=${{ opacity: 0, scale: 0.7 }} whileInView=${{ opacity: 1, scale: 1 }}
+      viewport=${{ once: true }} transition=${{ type: 'spring' }}>Bir dilek tut 🎂<//>
+    <${motion.div} className="cake" initial=${{ y: 80, opacity: 0 }} whileInView=${{ y: 0, opacity: 1 }}
+      viewport=${{ once: true, amount: 0.4 }} transition=${{ type: 'spring', stiffness: 80 }}
+      animate=${lit ? {} : { rotate: [0, -3, 3, -2, 2, 0] }}>
+      <div className="candles">
+        ${[0, 1, 2, 3, 4].map(i => html`<div className="candle" key=${i}>
+          <${AnimatePresence}>
+            ${lit && html`<${motion.div} className="flame" key="f"
+              initial=${{ scale: 0 }} animate=${{ scale: [1, 1.18, 0.92, 1.1, 1], rotate: [-4, 5, -3, 4, -4] }}
+              exit=${{ scale: 0, opacity: 0, x: 18 }}
+              transition=${{ duration: 0.7 + i * 0.07, repeat: Infinity, ease: 'easeInOut' }} />`}
+          <//>
+          ${!lit && html`<${motion.div} className="smoke" initial=${{ y: 0, opacity: 0.7, scale: 1 }}
+            animate=${{ y: -70, opacity: 0, scale: 3 }} transition=${{ duration: 1.8, delay: i * 0.08 }} />`}
+        </div>`)}
+      </div>
+      <div className="layer l1"></div>
+      <div className="layer l2"></div>
+      <div className="layer l3"></div>
+      <div className="plate"></div>
+    <//>
+    <${AnimatePresence} mode="wait">
+      <${motion.div} className="wish" key=${lit ? 'a' : 'b'}
+        initial=${{ opacity: 0, y: 14 }} animate=${{ opacity: 1, y: 0 }} exit=${{ opacity: 0, y: -14 }}>
+        ${lit ? 'Gözlerini kapat, dileğini tut ve mumları üfle…' : 'Dileğin kabul olsun Nisa! ✨ Mutlu yıllar!'}
+      <//>
+    <//>
+    <${motion.button} className="btn" onClick=${blow} onPointerDown=${e => e.stopPropagation()}
+      whileHover=${{ scale: 1.1 }} whileTap=${{ scale: 0.9 }}
+      animate=${{ boxShadow: ['0 10px 34px rgba(255,79,163,.4)', '0 10px 54px rgba(255,79,163,.9)', '0 10px 34px rgba(255,79,163,.4)'] }}
+      transition=${{ duration: 1.8, repeat: Infinity }}>
+      ${lit ? '🌬️ Mumları Üfle' : '🕯️ Mumları Tekrar Yak'}
+    <//>
+  </section>`;
+}
+
+function Finale({ onParty }) {
+  return html`<section className="finale">
+    <${motion.span} className="heart" animate=${{ scale: [1, 1.22, 1, 1.14, 1] }}
+      transition=${{ duration: 1.3, repeat: Infinity, ease: 'easeInOut' }}>💖<//>
+    <${motion.h2} style=${{ marginTop: 20, marginBottom: 0 }} initial=${{ opacity: 0, y: 40 }}
+      whileInView=${{ opacity: 1, y: 0 }} viewport=${{ once: true }} transition=${{ type: 'spring' }}>Nice mutlu yıllara Nisa!<//>
+    <${motion.p} initial=${{ opacity: 0 }} whileInView=${{ opacity: 0.95 }} viewport=${{ once: true }} transition=${{ delay: 0.3, duration: 0.8 }}>
+      Hayatın hep bugünkü kadar renkli, kalbin hep bugünkü kadar mutlu olsun. Seni çok seviyoruz, iyi ki doğdun, iyi ki bizimlesin!<//>
+    <${motion.button} className="btn" onClick=${e => { e.stopPropagation(); onParty(); }} onPointerDown=${e => e.stopPropagation()}
+      whileHover=${{ scale: 1.12, rotate: 2 }} whileTap=${{ scale: 0.88 }}>🎆 Bir Daha Kutla!<//>
+    <${motion.div} className="sign" initial=${{ opacity: 0, scale: 0.6 }} whileInView=${{ opacity: 1, scale: 1 }}
+      viewport=${{ once: true }} transition=${{ delay: 0.5, type: 'spring' }}>— Seni seven herkesten 💫<//>
+  </section>`;
+}
+
+function Main() {
+  const [burst, setBurst] = useState(1);
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 24 });
+
+  const party = (n = 10) => { window.FX.show(n); setBurst(b => b + 1); };
+
+  // arka planda ara ara fişek
+  useEffect(() => {
+    const id = setInterval(() => { if (!document.hidden) window.FX.launch(); }, 2600);
+    return () => clearInterval(id);
+  }, []);
+
+  return html`<${motion.div} className="main" initial=${{ opacity: 0 }} animate=${{ opacity: 1 }} transition=${{ duration: 0.8 }}
+    onPointerDown=${e => window.FX.launch(e.clientX, e.clientY)}>
+    <${motion.div} className="progress" style=${{ scaleX }} />
+    <${Balloons} />
+    <${Confetti} burst=${burst} />
+    <${Hero} />
+    <${Marquee} />
+    <${Messages} />
+    <${Cake} onBlow=${() => party(14)} />
+    <${Finale} onParty=${() => party(16)} />
+  <//>`;
+}
+
+function App() {
+  const [opened, setOpened] = useState(false);
+  const open = () => { window.FX.show(16, 180); setOpened(true); };
+  return html`
+    <${Stars} />
+    <${AnimatePresence} mode="wait">
+      ${opened ? html`<${Main} key="main" />` : html`<${Intro} key="intro" onOpen=${open} />`}
+    <//>`;
+}
+
+createRoot(document.getElementById('root')).render(html`<${App} />`);
+</script>
+</body>
+</html>
